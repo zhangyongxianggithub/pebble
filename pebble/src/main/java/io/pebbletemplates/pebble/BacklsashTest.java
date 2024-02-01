@@ -1,13 +1,7 @@
 package io.pebbletemplates.pebble;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.HashMap;
-import java.util.Map;
-
-import io.pebbletemplates.pebble.extension.Filter;
-import io.pebbletemplates.pebble.template.PebbleTemplate;
+import java.util.regex.Pattern;
 
 /**
  * @version 1.0
@@ -20,15 +14,20 @@ import io.pebbletemplates.pebble.template.PebbleTemplate;
 public class BacklsashTest {
     
     public static void main(final String[] args) throws IOException {
-        final PebbleEngine pebbleEngine = new PebbleEngine.Builder().build();
-        final PebbleTemplate literalTemplate = pebbleEngine.getLiteralTemplate(
-                "COMMENT='{{- comment | replace({\"\\\\\":\"\\\\\"}) | raw -}}'");
-        final Writer writer = new StringWriter();
-        final Map<String, Object> context = new HashMap<>();
-        context.put("comment", "abc\\\\'bccc");
-        literalTemplate.evaluate(writer, context);
-        Filter filter;
-        System.out.println(writer.toString());
+        final Pattern compile = Pattern.compile("\\\\(')");
+        System.out.println(compile.matcher("\'").find());
+        // System.out.println("xxx".replaceAll("\\\\(')", "$1"));
+        
+        // final PebbleEngine pebbleEngine = new PebbleEngine.Builder().build();
+        // final PebbleTemplate literalTemplate =
+        // pebbleEngine.getLiteralTemplate(
+        // "{{ comment | replace({'\\\\':'\\\\\\\\'}) }}");
+        // final Writer writer = new StringWriter();
+        // final Map<String, Object> context = new HashMap<>();
+        // context.put("comment", "abc\\\\'bccc");
+        // literalTemplate.evaluate(writer, context);
+        // Filter filter;
+        // System.out.println(writer.toString());
         
     }
     
